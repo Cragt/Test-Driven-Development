@@ -6,6 +6,14 @@ function capitalize(string) {
   return string.toUpperCase();
 }
 
+function reverseString(string) {
+  let reversedString = "";
+  for (let i = string.length - 1; i >= 0; i--) {
+    reversedString += string[i];
+  }
+  return reversedString;
+}
+
 function calculate(a, operator, b) {
   function add(a, b) {
     return a + b;
@@ -36,6 +44,30 @@ function calculate(a, operator, b) {
   }
 }
 
+function caesarCipher(string, shift, encodeOrDecode) {
+  if (encodeOrDecode === "encode") {
+    let encoded = "";
+    for (let i = 0; i < string.length; i++) {
+      let character = string[i];
+      if (character.match(/[a-z]/i)) {
+        let code = string.charCodeAt(i);
+        if (code >= 65 && code <= 90) {
+          character = String.fromCharCode(((code - 65 + shift + 26) % 26) + 65);
+        } else if (code >= 97 && code <= 122) {
+          character = String.fromCharCode(((code - 97 + shift + 26) % 26) + 97);
+        }
+      }
+      encoded += character;
+    }
+    return encoded;
+  } else if (encodeOrDecode === "decode") {
+    return caesarCipher(string, 26 - (shift % 26), "encode");
+  } else
+    return console.error(
+      "Please enter 'encode' or 'decode' as the third function argument."
+    );
+}
+
 function analyzeArray(array, property) {
   function average(arr) {
     let sum = 0;
@@ -47,7 +79,7 @@ function analyzeArray(array, property) {
 
   function min(arr) {
     let min = arr[0];
-    for (i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i] < min) {
         min = arr[i];
       }
@@ -57,7 +89,7 @@ function analyzeArray(array, property) {
 
   function max(arr) {
     let max = arr[0];
-    for (i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       if (arr[i] > max) {
         max = arr[i];
       }
@@ -81,5 +113,14 @@ function analyzeArray(array, property) {
     return;
   }
 }
-
-module.exports = { sum, capitalize, calculate, analyzeArray };
+console.log(
+  caesarCipher("Lwd xh iwt bpc iwpi itaah ndj lwpi id sd?", 67, "decode")
+);
+module.exports = {
+  sum,
+  capitalize,
+  calculate,
+  analyzeArray,
+  reverseString,
+  caesarCipher,
+};
